@@ -2,7 +2,7 @@
 namespace JulienIts\Bundle\EmailsQueueBundle\Services;
 
 use JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue;
-use JulienIts\Bundle\EmailsQueueBundle\EmailSent;
+use JulienIts\Bundle\EmailsQueueBundle\Entity\EmailSent;
 
 class EmailsQueueService
 {
@@ -18,10 +18,10 @@ class EmailsQueueService
     }
 	
     
-    public function processQueue()
+    public function processQueue($limit=15)
     {
         $queueRepo = $this->em->getRepository('EmailsQueueBundle:EmailQueue');
-        $emailsQueue = $queueRepo->findBy(array(), array('priority'=>'desc'), 15);
+        $emailsQueue = $queueRepo->findBy(array(), array('priority'=>'desc', 'id'=>'desc'), $limit);
         foreach($emailsQueue as $emailQueue){
             //echo "Send emailQ:".$emailQueue->getId(), "<br/>";
             $this->_sendEmailQueue($emailQueue);

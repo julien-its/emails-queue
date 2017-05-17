@@ -1,4 +1,4 @@
-{% extends 'EmailBundle:layout:base-email.html.twig' %}
+{% extends 'EmailsQueueBundle:layout:base-email.html.twig' %}
 
 {% block body %}
     <style type="text/css">
@@ -19,11 +19,7 @@
         <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;" class="content">
             <tr>
                 <td align="center" bgcolor="#46b7bf" style="padding: 20px 20px 20px 20px; color: #ffffff; font-family: Arial, sans-serif; font-size: 36px; font-weight: bold;">
-                    {% image 'bundles/email/img/newsletter.png' %}
-                        <img src="{{ app.request.getSchemeAndHttpHost() ~  asset_url }}" alt="" width="200" height="200" style="display:block;" />
-                    {% endimage %}
-                    <br/>
-                    Custom<strong>Booking</strong>
+                    EmailsQueue<strong>Bundle</strong>
                 </td>
             </tr>
 
@@ -31,7 +27,7 @@
 		        
             <tr>
                 <td align="center" bgcolor="#dddddd" style="padding: 15px 10px 15px 10px; color: #555555; font-family: Arial, sans-serif; font-size: 13px; line-height: 18px;">
-                    Custom<strong>Booking</strong>
+                    EmailsQueue<strong>Bundle</strong>
                 </td>
             </tr>
         </table>

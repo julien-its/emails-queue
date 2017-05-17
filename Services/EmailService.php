@@ -11,14 +11,14 @@ class EmailService
 	protected $twig;
 	protected $tokenStorage;
 	protected $user;
+    protected $emailsQueueService;
 
-	const DEFAULT_SUBJECT = "EmailQueue";
-	
     public function __construct(
 		\Doctrine\ORM\EntityManager $em,
 		\Symfony\Bundle\FrameworkBundle\Routing\Router $router,
 		\Twig_Environment $twig, 
-		TokenStorage $tokenStorage
+		TokenStorage $tokenStorage,
+        $emailsQueueService
 	)
     {
         $this->em = $em;
@@ -26,20 +26,29 @@ class EmailService
 		$this->twig = $twig;
 		$this->tokenStorage = $tokenStorage;
 		$this->user = $tokenStorage->getToken()->getUser();
+        $this->emailsQueueService = $emailsQueueService;
     }
 	
-	public function contact($message)
+    public function createNewAndProcess($config)
+    {
+        $this->createNew($config);
+        $this->emailsQueueService->processQueue(1);
+    }
+    
+	public function createNew($config)
 	{
-		$tpl = $this->twig->loadTemplate('EmailsQueueBundle:mail:contact.html.twig');
-		$emailHtml = $tpl->render( array('message' => $message));
+		$tpl = $this->twig->loadTemplate($config['template']);
+		$emailHtml = $tpl->render($config['templateVars']);
 		
 		$emailQueue = new \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue();
 		$emailQueue->setBody($emailHtml);
 		$emailQueue->setContext($this->em->getRepository('EmailsQueueBundle:EmailContext')->findOneByName('contact'));
-		$emailQueue->setEmailTo('teutates14@gmail.com');
-		$emailQueue->setEmailsCc('contact@julien-gustin.be');
-		$emailQueue->setPriority(\JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue::HIGH_PRIORITY);
-		$emailQueue->setSubject(self::DEFAULT_SUBJECT.' : Contact');
+		$emailQueue->setEmailTo($config['emailTo']);
+        foreach($config['setEmailsCc'] as $emailCc){
+            $emailQueue->setEmailsCc($emailCc);
+        }
+		$emailQueue->setPriority($config['priority']);
+		$emailQueue->setSubject($config['subject']);
         $emailQueue->setCreatedOn(new \DateTime());
 		
 		$this->em->persist($emailQueue);

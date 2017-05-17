@@ -1,10 +1,6 @@
-{#
-	
-#}
-{% extends 'EmailBundle:layout:email.html.twig' %}
+{% extends 'EmailsQueueBundle:layout:email.html.twig' %}
 
 {% block maincontent %}
-
     <tr>
         <td bgcolor="#ffffff" style="padding: 30px 20px 10px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 15px; line-height: 24px;">
             Contact form:
@@ -20,7 +16,7 @@
                 </tr>
                 <tr>
                     <td>Email:</td>
-                    <td>{{ message.email }}</td>
+                    <td>{{ message.message }}</td>
                 </tr>
                 <tr>
                     <td>Message:</td>
@@ -32,8 +28,7 @@
     </tr>
     <tr>
         <td bgcolor="#ffffff" style="padding: 10px 20px 30px 20px; color: #555555; font-family: Arial, sans-serif; font-size: 15px; line-height: 24px; border-bottom: 1px solid #f6f6f6;">
-            Custom Booking
+            AppBundle
         </td>
-    </tr>
-					
+    </tr>			
 {% endblock %}

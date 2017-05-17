@@ -17,7 +17,7 @@
       "twig/twig": "*",
       "doctrine/doctrine-bundle": "*"
    },
-   " autoload ":{  
+   "autoload ":{  
       " psr-0":{  
          "JulienIts\\Bundle\\EmailsQueueBundle": ""
       }

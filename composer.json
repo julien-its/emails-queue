@@ -3,7 +3,7 @@
    "type": "symfony-bundle",
    "description": "Symfony Easy Emails Queue Bundle",
    "keywords": [],
-   " license ":" GPL-3.0+ ",
+   "license": "GPL-3.0+",
    "authors":[  
       {  
          "name": "Julien IT Solutions",
@@ -19,8 +19,9 @@
    },
    " autoload ":{  
       " psr-0":{  
-         "JulienIts/Bundle/EmailsQueueBundle": ""
+         "JulienIts\\Bundle\\EmailsQueueBundle": ""
       }
    },
    "target-dir":"JulienIts/Bundle/EmailsQueueBundle",
+   "minimum-stability": "dev"
 }

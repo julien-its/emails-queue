@@ -15,62 +15,72 @@ Email-queue requires twig/twig and doctrine/doctrine-bundle
 Install with composer
 
 ```sh
-$ composer.phar require julien-its/emails-queue
+$ composer require julien-its/emails-queue
 ```
 
 ### Instructions
 
-Once installed, you have to register the EmailsQueueBundle in your AppKernel.php file :
+Once installed, 
+**register the EmailsQueueBundle in your AppKernel.php file :**
 
-```sh
-new JulienIts\Bundle\EmailsQueueBundle\EmailsQueueBundle()
-```
+*app/AppKernel.php*
 
-Modify your config.yml file and add this import line
+    new JulienIts\Bundle\EmailsQueueBundle\EmailsQueueBundle()
 
-```sh
-- { resource: "@EmailsQueueBundle/Resources/config/services.yml" }
-```
+**Modify your config.yml adding this import line**
 
-Generate new tables in your database
+*app/Resources/config/config.yml*
+
+     resource: "@EmailsQueueBundle/Resources/config/services.yml"
+
+**Generate new tables in your database with doctrine**
 
 ```sh
 $ php bin/console doctrine:schema:update --force
 ```
 
-Create a new service 
+**Create a new email service** where you will define all your emails methods. We only add one exemple of a contact form email
 
-```sh
-<?php
-namespace AppBundle\Services;
-use \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue;
-class EmailService
-{
-	const DEFAULT_SUBJECT = "My App";
-    protected $jitsEmailService;
-    
-    public function __construct(\JulienIts\Bundle\EmailsQueueBundle\Services\EmailService $jitsEmailService)
+    <?php
+    namespace AppBundle\Services;
+    use \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue;
+    class EmailService
     {
-        $this->jitsEmailService = $jitsEmailService;
+    	const DEFAULT_SUBJECT = "My App";
+        protected $jitsEmailService;
+        
+        public function __construct(\JulienIts\Bundle\EmailsQueueBundle\Services\EmailService $jitsEmailService)
+        {
+            $this->jitsEmailService = $jitsEmailService;
+        }
+    	
+    	public function contact($message)
+    	{
+            $config = array(
+                'template' => 'EmailsQueueBundle:mail:contact.html.twig',
+                'templateVars' => array('message' => $message),
+                'contextName' => 'contact',
+                'priority' => EmailQueue::HIGH_PRIORITY,
+                'subject' => self::DEFAULT_SUBJECT.' : Contact',
+                'emailTo' => 'toemail@to.com',
+                'setEmailsCc' => array('contact@julien-gustin.be')
+            );
+    		$this->jitsEmailService->createNewAndProcess($config);
+    	}
     }
-	
-	public function contact($message)
-	{
-        $config = array(
-            'template' => 'AppBundle:mail:contact.html.twig',
-            'templateVars' => array('message' => $message),
-            'contextName' => 'contact',
-            'priority' => EmailQueue::HIGH_PRIORITY,
-            'subject' => self::DEFAULT_SUBJECT.' : Contact',
-            'emailTo' => 'toemail@to.com',
-            'setEmailsCc' => array('contact@julien-gustin.be')
-        );
-		$this->jitsEmailService->createNewAndProcess($config);
-	}
-}
-```
 
-Register your service in services.yml :
+Note that you can copy the contact.html and email layout on your own appBundle to personalize them
+
+**Two possibilities when creating an emailQueue :**
+
+    $this->jitsEmailService->createNew($config);
+    $this->jitsEmailService->createNewAndProcess($config);
+
+createNewAndProcess Will directly process the email queue and send it to your mail service.
+
+**Register your service in services.yml** :
+
+*app/Resources/config/services.yml*
 
 ```sh
 services:
@@ -80,13 +90,26 @@ services:
             jitsEmailService: "@jits.services.email"
 ```
 
+### Send an email
+
 To send your email, call your service in a controller :
 
 ```sh
 $message = array(
-    'name' => 'Julien',
-    'phone' => '+32484263299',
-    'message' => 'Voici mon mail'
+    'name' => 'Julien Gustin',
+    'phone' => '+320484010203',
+    'message' => 'gustin.julien@gmail.com'
 );
 $this->get('services.email')->contact($message);
 ```
+### Define the cron action
+
+If you went to send emails by packets, register the route in your routing.yml file
+
+*app/Resources/config/routing.yml*
+
+    emailsQueue:
+        resource: '@EmailsQueueBundle/Controller/'
+        type: annotation
+
+URL will be like : /emails-queue/cron/process-mail-queue

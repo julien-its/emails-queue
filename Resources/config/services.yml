@@ -3,14 +3,14 @@ services:
     jits.services.email:
         class: JulienIts\Bundle\EmailsQueueBundle\Services\EmailService
         arguments:
-            entityManager: "@doctrine.orm.entity_manager"
+            em: "@doctrine.orm.entity_manager"
             router: "@router"
             twig: "@twig"
             tokenStorage: "@security.token_storage"
             emailsQueueService : "@jits.services.emails_queue"
-    
+
     jits.services.emails_queue:
         class: JulienIts\Bundle\EmailsQueueBundle\Services\EmailsQueueService
-        arguments: 
-            entityManager: "@doctrine.orm.entity_manager"
+        arguments:
+            em: "@doctrine.orm.entity_manager"
             mailer: "@mailer"

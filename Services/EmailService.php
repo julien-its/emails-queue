@@ -16,7 +16,7 @@ class EmailService
     public function __construct(
 		\Doctrine\ORM\EntityManager $em,
 		\Symfony\Bundle\FrameworkBundle\Routing\Router $router,
-		\Twig_Environment $twig, 
+		\Twig_Environment $twig,
 		TokenStorage $tokenStorage,
         $emailsQueueService
 	)
@@ -28,29 +28,45 @@ class EmailService
 		$this->user = $tokenStorage->getToken()->getUser();
         $this->emailsQueueService = $emailsQueueService;
     }
-	
+
     public function createNewAndProcess($config)
     {
         $this->createNew($config);
         $this->emailsQueueService->processQueue(1);
     }
-    
+
 	public function createNew($config)
 	{
 		$tpl = $this->twig->loadTemplate($config['template']);
 		$emailHtml = $tpl->render($config['templateVars']);
-		
+
 		$emailQueue = new \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue();
 		$emailQueue->setBody($emailHtml);
 		$emailQueue->setContext($this->em->getRepository('EmailsQueueBundle:EmailContext')->findOneByName('contact'));
 		$emailQueue->setEmailTo($config['emailTo']);
-        foreach($config['setEmailsCc'] as $emailCc){
-            $emailQueue->setEmailsCc($emailCc);
+        if(isset($config['emailsCc'])){
+            if(!is_array($config['emailsCc'])){
+                $emailQueue->setEmailsCc($config['emailsCc']);
+            }else{
+                foreach($config['emailsCc'] as $emailCc){
+                    $emailQueue->setEmailsCc($emailCc);
+                }
+            }
         }
+        if(isset($config['emailsBcc'])){
+            if(!is_array($config['emailsBcc'])){
+                $emailQueue->setEmailsBcc($config['emailsBcc']);
+            }else{
+                foreach($config['emailsBcc'] as $emailBcc){
+                    $emailQueue->setEmailsBcc($emailBcc);
+                }
+            }
+        }
+
 		$emailQueue->setPriority($config['priority']);
 		$emailQueue->setSubject($config['subject']);
         $emailQueue->setCreatedOn(new \DateTime());
-		
+
 		$this->em->persist($emailQueue);
 		$this->em->flush();
 	}

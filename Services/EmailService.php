@@ -45,22 +45,10 @@ class EmailService
 		$emailQueue->setContext($this->em->getRepository('EmailsQueueBundle:EmailContext')->findOneByName('contact'));
 		$emailQueue->setEmailTo($config['emailTo']);
         if(isset($config['emailsCc'])){
-            if(!is_array($config['emailsCc'])){
-                $emailQueue->setEmailsCc($config['emailsCc']);
-            }else{
-                foreach($config['emailsCc'] as $emailCc){
-                    $emailQueue->setEmailsCc($emailCc);
-                }
-            }
+            $emailQueue->setEmailsCc($config['emailsCc']);
         }
         if(isset($config['emailsBcc'])){
-            if(!is_array($config['emailsBcc'])){
-                $emailQueue->setEmailsBcc($config['emailsBcc']);
-            }else{
-                foreach($config['emailsBcc'] as $emailBcc){
-                    $emailQueue->setEmailsBcc($emailBcc);
-                }
-            }
+            $emailQueue->setEmailsBcc($config['emailsBcc']);
         }
 
 		$emailQueue->setPriority($config['priority']);

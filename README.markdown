@@ -63,7 +63,7 @@ $ php bin/console doctrine:schema:update --force
                 'priority' => EmailQueue::HIGH_PRIORITY,
                 'subject' => self::DEFAULT_SUBJECT.' : Contact',
                 'emailTo' => 'toemail@to.com',
-                'mailsCc' => array('contact@julien-gustin.be')
+                'mailsCc' => 'contact@julien-gustin.be;email2@email.com'
             );
     		$this->jitsEmailService->createNewAndProcess($config);
     	}

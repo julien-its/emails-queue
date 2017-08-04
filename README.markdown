@@ -1,11 +1,11 @@
-# Julien-ITS 
+# Julien-ITS
 
 ## emails-queue
 
 ### Features
 
-Service you can use to send your emails to a queue system. All your emails will be stored in your database to keep logs of them. 
-Send your emails directly or with a cron using the queue. 
+Service you can use to send your emails to a queue system. All your emails will be stored in your database to keep logs of them.
+Send your emails directly or with a cron using the queue.
 Define how many emails you want to send each time you call the process queue action.
 
 ### Installation
@@ -20,7 +20,7 @@ $ composer require julien-its/emails-queue
 
 ### Instructions
 
-Once installed, 
+Once installed,
 **register the EmailsQueueBundle in your AppKernel.php file :**
 
 *app/AppKernel.php*
@@ -48,12 +48,12 @@ $ php bin/console doctrine:schema:update --force
     {
     	const DEFAULT_SUBJECT = "My App";
         protected $jitsEmailService;
-        
+
         public function __construct(\JulienIts\Bundle\EmailsQueueBundle\Services\EmailService $jitsEmailService)
         {
             $this->jitsEmailService = $jitsEmailService;
         }
-    	
+
     	public function contact($message)
     	{
             $config = array(
@@ -63,7 +63,7 @@ $ php bin/console doctrine:schema:update --force
                 'priority' => EmailQueue::HIGH_PRIORITY,
                 'subject' => self::DEFAULT_SUBJECT.' : Contact',
                 'emailTo' => 'toemail@to.com',
-                'setEmailsCc' => array('contact@julien-gustin.be')
+                'mailsCc' => array('contact@julien-gustin.be')
             );
     		$this->jitsEmailService->createNewAndProcess($config);
     	}
@@ -87,7 +87,7 @@ services:
     services.email:
         class: AppBundle\Services\EmailService
         arguments:
-            jitsEmailService: "@jits.services.email"
+            $jitsEmailService: "@jits.services.email"
 ```
 
 ### Send an email

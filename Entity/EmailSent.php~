@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Account
  *
  * @ORM\Table(name="email_sent")
- * @ORM\Entity(repositoryClass="EmailBundle\Repository\EmailSentRepository")
+ * @ORM\Entity(repositoryClass="JulienIts\Bundle\EmailsQueueBundle\Repository\EmailSentRepository")
  */
 class EmailSent
 {
@@ -30,6 +30,13 @@ class EmailSent
      */
     private $priority;
 	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="emailFrom", type="string", length=150)
+     */
+    private $emailFrom;
+
 	/**
      * @var string
      *
@@ -93,5 +100,6 @@ class EmailSent
 	// Auto generated methods
 	// -------------------------------------------------------------------------
 	
+
 
 }

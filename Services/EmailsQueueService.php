@@ -40,7 +40,7 @@ class EmailsQueueService
         }
         
         $message->setSubject($emailQueue->getSubject())
-				->setFrom('info@custom-booking.be')
+				->setFrom($emailQueue->getEmailFrom())
 				->setTo($to)
 				->setBody($emailQueue->getBody(),'text/html');
         
@@ -88,6 +88,7 @@ class EmailsQueueService
         $emailSent = new EmailSent();
         
         $emailSent->setPriority($emailQueue->getPriority());
+        $emailSent->setEmailFrom($emailQueue->getEmailFrom());
         $emailSent->setEmailTo($emailQueue->getEmailTo());
         $emailSent->setSubject($emailQueue->getSubject());
         $emailSent->setBody($emailQueue->getBody());

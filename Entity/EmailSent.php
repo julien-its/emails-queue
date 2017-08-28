@@ -30,6 +30,13 @@ class EmailSent
      */
     private $priority;
 	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="emailFrom", type="string", length=150)
+     */
+    private $emailFrom;
+
 	/**
      * @var string
      *
@@ -95,6 +102,7 @@ class EmailSent
 	
 
 
+
     /**
      * Get id
      *
@@ -127,6 +135,30 @@ class EmailSent
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * Set emailFrom
+     *
+     * @param string $emailFrom
+     *
+     * @return EmailSent
+     */
+    public function setEmailFrom($emailFrom)
+    {
+        $this->emailFrom = $emailFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get emailFrom
+     *
+     * @return string
+     */
+    public function getEmailFrom()
+    {
+        return $this->emailFrom;
     }
 
     /**

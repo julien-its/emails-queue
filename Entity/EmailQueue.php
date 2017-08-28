@@ -37,6 +37,13 @@ class EmailQueue
      */
     private $priority;
 	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="emailFrom", type="string", length=150)
+     */
+    private $emailFrom;
+
 	/**
      * @var string
      *
@@ -104,6 +111,7 @@ class EmailQueue
 	
 
 
+
     /**
      * Get id
      *
@@ -136,6 +144,30 @@ class EmailQueue
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * Set emailFrom
+     *
+     * @param string $emailFrom
+     *
+     * @return EmailQueue
+     */
+    public function setEmailFrom($emailFrom)
+    {
+        $this->emailFrom = $emailFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get emailFrom
+     *
+     * @return string
+     */
+    public function getEmailFrom()
+    {
+        return $this->emailFrom;
     }
 
     /**

@@ -42,7 +42,8 @@ class EmailService
 
 		$emailQueue = new \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailQueue();
 		$emailQueue->setBody($emailHtml);
-		$emailQueue->setContext($this->em->getRepository('EmailsQueueBundle:EmailContext')->findOneByName('contact'));
+		$emailQueue->setContext($this->em->getRepository('EmailsQueueBundle:EmailContext')->findOneByName($config['contextName']));
+		$emailQueue->setEmailFrom($config['emailFrom']);
 		$emailQueue->setEmailTo($config['emailTo']);
         if(isset($config['emailsCc'])){
             $emailQueue->setEmailsCc($config['emailsCc']);

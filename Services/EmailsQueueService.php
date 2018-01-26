@@ -45,7 +45,7 @@ class EmailsQueueService
 				->setBody($emailQueue->getBody(),'text/html');
         
         if($emailQueue->getBodyText() != null){
-            $message->setBodyText($emailQueue->getBodyText(),'text/plain')
+            $message->setBodyText($emailQueue->getBodyText(),'text/plain');
         }
 
 

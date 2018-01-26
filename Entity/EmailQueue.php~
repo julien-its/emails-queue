@@ -85,6 +85,13 @@ class EmailQueue
      * @ORM\Column(name="body", type="text")
      */
     private $body;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bodyText", type="text")
+     */
+    private $bodyText;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="JulienIts\Bundle\EmailsQueueBundle\Entity\EmailContext", inversedBy="emailsQueue", cascade={"persist"})
@@ -111,4 +118,254 @@ class EmailQueue
 	
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     *
+     * @return EmailQueue
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * Set emailFrom
+     *
+     * @param string $emailFrom
+     *
+     * @return EmailQueue
+     */
+    public function setEmailFrom($emailFrom)
+    {
+        $this->emailFrom = $emailFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get emailFrom
+     *
+     * @return string
+     */
+    public function getEmailFrom()
+    {
+        return $this->emailFrom;
+    }
+
+    /**
+     * Set emailTo
+     *
+     * @param string $emailTo
+     *
+     * @return EmailQueue
+     */
+    public function setEmailTo($emailTo)
+    {
+        $this->emailTo = $emailTo;
+
+        return $this;
+    }
+
+    /**
+     * Get emailTo
+     *
+     * @return string
+     */
+    public function getEmailTo()
+    {
+        return $this->emailTo;
+    }
+
+    /**
+     * Set emailsBcc
+     *
+     * @param string $emailsBcc
+     *
+     * @return EmailQueue
+     */
+    public function setEmailsBcc($emailsBcc)
+    {
+        $this->emailsBcc = $emailsBcc;
+
+        return $this;
+    }
+
+    /**
+     * Get emailsBcc
+     *
+     * @return string
+     */
+    public function getEmailsBcc()
+    {
+        return $this->emailsBcc;
+    }
+
+    /**
+     * Set emailsCc
+     *
+     * @param string $emailsCc
+     *
+     * @return EmailQueue
+     */
+    public function setEmailsCc($emailsCc)
+    {
+        $this->emailsCc = $emailsCc;
+
+        return $this;
+    }
+
+    /**
+     * Get emailsCc
+     *
+     * @return string
+     */
+    public function getEmailsCc()
+    {
+        return $this->emailsCc;
+    }
+
+    /**
+     * Set replyTo
+     *
+     * @param string $replyTo
+     *
+     * @return EmailQueue
+     */
+    public function setReplyTo($replyTo)
+    {
+        $this->replyTo = $replyTo;
+
+        return $this;
+    }
+
+    /**
+     * Get replyTo
+     *
+     * @return string
+     */
+    public function getReplyTo()
+    {
+        return $this->replyTo;
+    }
+
+    /**
+     * Set subject
+     *
+     * @param string $subject
+     *
+     * @return EmailQueue
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * Set body
+     *
+     * @param string $body
+     *
+     * @return EmailQueue
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Get body
+     *
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set createdOn
+     *
+     * @param \DateTime $createdOn
+     *
+     * @return EmailQueue
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+
+        return $this;
+    }
+
+    /**
+     * Get createdOn
+     *
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * Set context
+     *
+     * @param \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailContext $context
+     *
+     * @return EmailQueue
+     */
+    public function setContext(\JulienIts\Bundle\EmailsQueueBundle\Entity\EmailContext $context = null)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return \JulienIts\Bundle\EmailsQueueBundle\Entity\EmailContext
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
 }

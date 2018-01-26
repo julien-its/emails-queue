@@ -71,13 +71,20 @@ class EmailSent
      * @ORM\Column(name="subject", type="string", length=255)
      */
     private $subject;
-	
-	/**
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="body", type="text")
      */
     private $body;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bodyText", type="text")
+     */
+    private $bodyText;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="JulienIts\Bundle\EmailsQueueBundle\Entity\EmailContext", inversedBy="emailsSent", cascade={"persist"})
@@ -351,5 +358,29 @@ class EmailSent
     public function getContext()
     {
         return $this->context;
+    }
+
+    /**
+     * Set bodyText
+     *
+     * @param string $bodyText
+     *
+     * @return EmailSent
+     */
+    public function setBodyText($bodyText)
+    {
+        $this->bodyText = $bodyText;
+
+        return $this;
+    }
+
+    /**
+     * Get bodyText
+     *
+     * @return string
+     */
+    public function getBodyText()
+    {
+        return $this->bodyText;
     }
 }

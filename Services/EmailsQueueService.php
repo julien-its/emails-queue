@@ -44,6 +44,11 @@ class EmailsQueueService
 				->setTo($to)
 				->setBody($emailQueue->getBody(),'text/html');
         
+        if($emailQueue->getBodyText() != null){
+            $message->setBodyText($emailQueue->getBodyText(),'text/plain')
+        }
+
+
         foreach($emailQueue->getBccArray() as $bcc){
             if($bcc == $to)
                 continue;
@@ -92,6 +97,7 @@ class EmailsQueueService
         $emailSent->setEmailTo($emailQueue->getEmailTo());
         $emailSent->setSubject($emailQueue->getSubject());
         $emailSent->setBody($emailQueue->getBody());
+        $emailSent->setBodyText($emailQueue->getBodyText());
         $emailSent->setCreatedOn($emailQueue->getCreatedOn());
         $emailSent->setContext($emailQueue->getContext());
 		$emailSent->setEmailsBcc($emailQueue->getEmailsBcc());

@@ -85,6 +85,13 @@ class EmailQueue
      * @ORM\Column(name="body", type="text")
      */
     private $body;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bodyText", type="text")
+     */
+    private $bodyText;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="JulienIts\Bundle\EmailsQueueBundle\Entity\EmailContext", inversedBy="emailsQueue", cascade={"persist"})
@@ -360,5 +367,29 @@ class EmailQueue
     public function getContext()
     {
         return $this->context;
+    }
+
+    /**
+     * Set bodyText
+     *
+     * @param string $bodyText
+     *
+     * @return EmailQueue
+     */
+    public function setBodyText($bodyText)
+    {
+        $this->bodyText = $bodyText;
+
+        return $this;
+    }
+
+    /**
+     * Get bodyText
+     *
+     * @return string
+     */
+    public function getBodyText()
+    {
+        return $this->bodyText;
     }
 }

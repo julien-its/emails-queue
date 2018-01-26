@@ -56,6 +56,13 @@ class EmailService
 		$emailQueue->setSubject($config['subject']);
         $emailQueue->setCreatedOn(new \DateTime());
 
+        // Add body text
+		if(isset($config['templateText'])){
+			$tplText = $this->twig->loadTemplate($config['templateText']);
+			$emailText = $tplText->render($config['templateVars']);
+			$emailQueue->setBodyText($emailText);
+		}
+
 		$this->em->persist($emailQueue);
 		$this->em->flush();
 	}

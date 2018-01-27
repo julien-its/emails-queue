@@ -82,7 +82,7 @@ class EmailSent
     /**
      * @var string
      *
-     * @ORM\Column(name="bodyText", type="text")
+     * @ORM\Column(name="bodyText", type="text", nullable=true)
      */
     private $bodyText;
 	
